@@ -9,6 +9,19 @@ In Development
 Version 0.6
 ~~~~~~~~~~~
 
+- Improve GET perfomance on large versioned documents (Nick Park.)
+- Fix: Do not overwrite ``ID_FIELD`` as it is not a sub resource. See #641 for
+  details (Olivier Poitrey).
+- New: ``MEDIA_BASE_URL`` allows to set a custom base URL to be used when
+  ``RETURN_MEDIA_AS_URL`` is active (Henrique Barroso).  
+- The ``MediaStorage`` base class now accepts the active resource as an
+  argument for its methods. This allows data-layers to avoid resorting to the
+  Flask request object to determine the active resource. To preserve backward
+  compatibility the new ``resource`` argument defaults to ``None`` (Magdas
+  Adrian).
+- The Mongo data-layer is not dependant on the Flask request object anymore. It
+  will still fallback to it if the ``resource`` argument is ``None``. Closes
+  #632. (Magdas Adrian).
 - New: ``SOFT_DELETE`` enables soft deletes when set to ``True`` (Nick Park.)
 - New: ``mongo_indexes`` allows for creation of MongoDB indexes at application
   launch (Pau Freixes.)

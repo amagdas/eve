@@ -701,8 +701,9 @@ def resolve_media_files(document, resource):
             if config.RETURN_MEDIA_AS_BASE64_STRING:
                 ret_file = base64.encodestring(_file.read())
             elif config.RETURN_MEDIA_AS_URL:
-                ret_file = '%s/%s/%s' % (app.api_prefix,
-                                         config.MEDIA_ENDPOINT,
+                prefix = config.MEDIA_BASE_URL if config.MEDIA_BASE_URL \
+                    is not None else app.api_prefix
+                ret_file = '%s/%s/%s' % (prefix, config.MEDIA_ENDPOINT,
                                          file_id)
             else:
                 ret_file = None
@@ -810,7 +811,7 @@ def resolve_sub_resource_path(document, resource):
     schema = app.config['DOMAIN'][resource]['schema']
     fields = []
     for field, value in request.view_args.items():
-        if field in schema:
+        if field in schema and field != config.ID_FIELD:
             fields.append(field)
             document[field] = value
 
